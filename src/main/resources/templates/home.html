@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+ <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+
+<head>
+<title>Employee Management - Home Page</title>
+</head>
+
+<body>
+	<div class="container">
+		
+		<div class="container col-sm-offset-3 col-sm-6">
+		<h2>Company Home Page</h2>
+		<hr>
+
+		<p>Welcome to Employee Management App</p>
+
+		<hr>
+
+		<!-- display user name and role -->
+
+		<div>
+			User: <span sec:authentication="name" ></span><br>
+			<!-- Role(s): <span sec:authentication="principal.authorities"></span> -->
+			<br> &nbsp; &nbsp;
+			<!-- Add a logout button -->
+			<p>
+				<a th:href="@{/logout}" class="btn btn-primary btn-sm mr-5 mb-3" style="margin-top: 10px;">Logout</a>
+			</p><br>
+			<!-- Check for login error -->
+			<div th:if="${session.user}">
+				<!-- 			<p th:text="'First name: ' + ${session.user.firstName} + ', Last name: ' + ${session.user.lastName} + ', Email: ' + ${session.user.email}"></p> -->
+				<p th:text="'First name: ' + ${session.user.firstName}" class="input-lg form-control"></p>
+				<p th:text="'Last name: ' + ${session.user.lastName}" class="input-lg form-control"></p>
+				<p th:text="'Email: ' + ${session.user.email}" class="input-lg form-group form-control"></p>
+			</div>
+		</div>
+
+		<div sec:authorize="hasRole('ROLE_EMPLOYEE')" class="form-group">
+			<!-- Add a link to point to Employees -->
+			<p>
+				<a th:href="@{/leave/list-leaves}" class="btn btn-danger btn-sm col-xs-12 col-sm-4"> &nbsp;&nbsp;
+				<i class="glyphicon glyphicon-pencil"></i> Check Leave</a>&nbsp;				
+			</p>
+		</div>
+
+		<div sec:authorize="hasRole('ROLE_ADMIN')" class="form-group">
+			<p>
+				<a th:href="@{/employees/list}" class="btn btn-danger btn-sm col-xs-12 col-sm-4">
+				 <i class="glyphicon glyphicon-pencil"></i>&nbsp;Go to Employees List</a>
+			</p>
+		</div>
+		
+		
+	</div>
+	</div>
+	
+	<script th:src="@{/webjars/jquery/1.9.1/jquery.min.js/}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

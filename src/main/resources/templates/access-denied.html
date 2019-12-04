@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Access Denied</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+	<script th:src="@{/webjars/jquery/1.9.1/jquery.min.js/}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+ 
+ 	<div class="container">
+		<h2>Access Denied - You are not authorized to access this resource.</h2>
+	
+		<hr>
+		
+		<a th:href="@{/}">Back to Home Page</a>
+	</div>
+</body>
+
+</html>

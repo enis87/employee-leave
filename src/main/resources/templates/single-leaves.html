@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css"	th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+
+<title>Employee Leaves</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h3>Employee Leaves</h3>
+		<hr>
+
+		<div class="container">
+			User: <b><span sec:authentication="name"></span></b> <br>
+		</div>
+		<hr>
+		<br>
+		<div class="form-row" >
+	
+			<a th:href="@{/employees/list}" class="btn btn-info" style="height: fit-content;">Go to Employee Management</a>
+			<!-- Add a logout button -->
+			&nbsp;&nbsp;&nbsp;
+		<p sec:authorize="isAuthenticated()"><a th:href="@{/logout}" class="btn btn-primary btn-sm mr-5 mb-3">Logout</a></p>
+			
+		</div>
+		<div class="container">
+
+		 <br><br>
+
+
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>User Name</th>
+						<th>Description</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Total Days</th>
+						<th>Remainig Days</th>
+						<th>Actions</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="leavesEmployee : ${leaves}">
+						<td th:text="${leavesEmployee.userName}" />
+						<td th:text="${leavesEmployee.description}" />
+						<td th:text="${leavesEmployee.targetDate}" />
+						<td th:text="${leavesEmployee.endDate}" />
+						<td th:text="${leavesEmployee.totdays}" />
+						<td th:text="${leavesEmployee.remainigdays}" />
+
+						<td class="form-row" style="margin:0;">
+							<div sec:authorize="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
+
+								<!-- Add "update" button/link -->
+								<!-- <a th:href="@{/dayoff/update-leave(id=${leavesEmployee.id})}"
+									class="btn btn-info btn-sm"> Update </a> -->
+								<a th:href="@{/dayoff/action(value=${'Aproved'},id=${leavesEmployee.id})}"	class="btn btn-info btn-sm"> Approve</a>
+							</div>
+							&nbsp; &nbsp;
+							<div sec:authorize="hasAnyRole('ROLE_EMPLOYEE','ROLE_ADMIN')">
+
+								<!-- Add "delete" button/link -->
+								<!-- <a th:href="@{/dayoff/delete-leave(id=${leavesEmployee.id})}"
+									class="btn btn-danger btn-sm"
+									onclick="if (!(confirm('Are you sure you want to delete this date?'))) return false">
+									Delete </a> -->
+								<a th:href="@{/dayoff/action(value=${'Rejected'},id=${leavesEmployee.id})}"	class="btn btn-danger btn-sm"> Reject</a>
+							</div>
+						</td>
+						<td th:text="${leavesEmployee.aprovedrejected}" />
+
+					</tr>
+				</tbody>
+			</table>
+
+			
+		</div>
+	</div>
+<script th:src="@{/webjars/jquery/1.9.1/jquery.min.js/}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+<script	th:src="@{/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js}"></script>
+</body>
+</html>
+
+
+

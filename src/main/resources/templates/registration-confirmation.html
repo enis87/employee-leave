@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Registration Confirmation</title>
+</head>
+
+<body>
+
+	<h2>User registered successfully!</h2>
+
+	<hr>
+	<div>
+	<a th:href="@{/showMyLoginPage}" class="btn btn-primary btn-sm">Login with new user</a>
+	</div>
+	<div>
+	<a th:href="@{/employees/list}" class="btn btn-primary btn-sm">Go Back to Employee List</a>
+	</div>
+	
+</body>
+
+</html>

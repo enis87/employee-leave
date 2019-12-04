@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+
+<title>Save Day Off</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h3>Leaves Directory</h3>
+		<hr>
+
+		<p class="h4 mb-4">Add Leaves</p>
+
+		<form th:action="@{/leave/add-leave}" th:object="${leaves}"
+			method="POST">
+			
+				<!-- Add hidden form field to handle update -->
+				<input type="hidden" th:field="*{id}" /> 
+				<input type="hidden" th:field="*{userName}" />
+				<!-- <input type="text"
+					th:field="*{description}" class="form-control mb-4 col-4"
+					placeholder="Description">  -->
+					
+					<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error':''"> 
+				      <input id="description" class="form-control mb-4 col-4" th:field="*{description}" 
+				      placeholder="Leave Description" />
+				      <p class="error-message text-danger"
+				       th:each="error: ${#fields.errors('description')}"
+				       th:text="${error}">Validation error</p>
+				     </div>
+				<input type="text"
+					th:id="targetDate" th:field="*{targetDate}"
+					class="form-control mb-4 col-4" placeholder="Start Date">
+					
+				 <input
+					type="text" th:id="endDate" th:field="*{endDate}"
+					class="form-control mb-4 col-4" placeholder="End Date">
+		
+			<button type="submit" class="btn btn-info col-2">Save</button>
+
+		</form>
+
+		<hr>
+		<a th:href="@{/leave/list-leaves}" class="btn btn-primary btn-sm">Back to Leaves List</a>
+
+	</div>
+
+
+</body>
+
+<script th:src="@{/webjars/jquery/1.9.1/jquery.min.js/}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+<script	th:src="@{/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js}"></script>
+<script>
+	$('#targetDate').datepicker({
+		format : 'dd/mm/yyyy'
+	});
+
+	$('#endDate').datepicker({
+		format : 'dd/mm/yyyy'
+	});
+</script>
+</html>
