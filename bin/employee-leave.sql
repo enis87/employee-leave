@@ -101,6 +101,7 @@ CREATE TABLE `leaves` (
   `end_date` date DEFAULT NULL,
   `totdays` int(11) NOT NULL,
   `remainigdays` int(11) NOT NULL,
+  `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
  -- CONSTRAINT `leaves_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
  -- ON DELETE NO ACTION ON UPDATE NO ACTION

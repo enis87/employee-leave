@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html lang="en" 
+		xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	
+<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}">
+	<title>Employee Directory</title>
+</head>
+
+<body>
+
+<div class="container">
+
+	<h3>Employee Directory</h3>
+	<hr>
+	
+	<div>
+		User: <span sec:authentication="name"></span>
+		<br>
+		Role(s): <span sec:authentication="principal.authorities"></span>
+		<br><br>
+	</div>
+	
+    <form th:action="@{/employees/search}" class="form-inline">
+		<a th:href="@{/register/showRegistrationForm}"
+			class="btn btn-primary btn-sm mr-5 mb-3">
+			Add Employee
+		</a>
+			<!-- Add a logout button -->
+	<p sec:authorize="isAuthenticated()"><a th:href="@{/logout}" class="btn btn-primary btn-sm mr-5 mb-3">Logout</a></p>
+	
+		<input class="form-control  ml-5 mr-sm-2 mb-3" type="search" name="employeeName" placeholder="Search by name" />
+
+		<button class="btn btn-success mb-3" type="submit">Search</button>
+    </form>	
+	
+	
+	<table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Action</th>
+				<th>Notification</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="tempEmployee : ${employees}">
+			
+				<td th:text="${tempEmployee.firstName}" />	
+				<td th:text="${tempEmployee.lastName}" />	
+				<td th:text="${tempEmployee.email}" />	
+				
+				<td class="form-row" style="margin:0;">
+					<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+
+						<!-- Add "update" button/link -->
+						<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+						   class="btn btn-info btn-sm">
+							Update
+						</a>
+
+					</div>					
+				   &nbsp; &nbsp;
+					<div sec:authorize="hasRole('ROLE_ADMIN')">  
+					
+						<!-- Add "delete" button/link -->					
+						<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+						   class="btn btn-danger btn-sm"
+						   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">
+							Delete
+						</a>
+
+					</div>		
+					 &nbsp; &nbsp;
+					<div sec:authorize="hasRole('ROLE_ADMIN')">  
+					
+						<!-- Add "view employee leaves" button/link -->					
+						<a th:href="@{/dayoff/list-leave(username=${tempEmployee.userName})}"
+						   class="btn btn-warning btn-sm">
+							View
+						</a>
+
+					</div>				
+				</td>
+				 <td th:text="${notification}" /></td>
+				
+			</tr>
+		</tbody>		
+	</table>
+	
+		
+</div>
+	<script th:src="@{/webjars/jquery/1.9.1/jquery.min.js/}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+<script	th:src="@{/webjars/bootstrap-datepicker/1.0.1/js/bootstrap-datepicker.js}"></script>
+</body>
+</html>
+
+
+
