@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `employee_holidays`;
+CREATE DATABASE `employee_holidays`;
 
 USE `employee_holidays`;
 
